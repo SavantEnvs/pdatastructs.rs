@@ -1,0 +1,18 @@
+[package]
+name = "pdatastructs-kat"
+version = "0.0.0"
+publish = false
+edition = "2024"
+
+# Standalone workspace root (see mayhem/fuzz/Cargo.toml for why).
+[workspace]
+
+[dependencies.pdatastructs]
+path = "../.."
+
+[[bin]]
+name = "kat"
+path = "src/main.rs"
+test = false
+doc = false
+bench = false

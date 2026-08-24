@@ -1,0 +1,11 @@
+# Mayhem target: fuzz_countminsketch — drives an arbitrary sequence of add_n operations against
+# pdatastructs::countminsketch::CountMinSketch and differentially checks against a HashMap that
+# the sketch never undercounts (see mayhem/fuzz/fuzz_targets/fuzz_countminsketch.rs).
+project: savantenvs/pdatastructs.rs
+target: fuzz_countminsketch
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/fuzz_countminsketch/testsuite
+cmds:
+  - cmd: /mayhem/fuzz_countminsketch
+    libfuzzer: true

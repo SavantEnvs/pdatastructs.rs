@@ -1,0 +1,11 @@
+# Mayhem target: fuzz_bloomfilter — drives an arbitrary sequence of insert/query operations
+# against pdatastructs::filters::bloomfilter::BloomFilter and asserts the zero-false-negative
+# property (see mayhem/fuzz/fuzz_targets/fuzz_bloomfilter.rs).
+project: savantenvs/pdatastructs.rs
+target: fuzz_bloomfilter
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/fuzz_bloomfilter/testsuite
+cmds:
+  - cmd: /mayhem/fuzz_bloomfilter
+    libfuzzer: true

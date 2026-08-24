@@ -1,0 +1,12 @@
+# Mayhem target: fuzz_hyperloglog — drives an arbitrary sequence of add() operations against
+# pdatastructs::hyperloglog::HyperLogLog and asserts the exact, hash-independent invariants (empty
+# state, merge-with-empty is a no-op, clear() resets to empty); see
+# mayhem/fuzz/fuzz_targets/fuzz_hyperloglog.rs.
+project: savantenvs/pdatastructs.rs
+target: fuzz_hyperloglog
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/fuzz_hyperloglog/testsuite
+cmds:
+  - cmd: /mayhem/fuzz_hyperloglog
+    libfuzzer: true
