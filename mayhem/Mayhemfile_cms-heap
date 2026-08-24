@@ -1,0 +1,9 @@
+# Mayhem target: cms-heap — drives a stream of keys into a Top-K CMSHeap and checks it keeps exactly min(k, distinct) added, unique keys (see mayhem/fuzz/fuzz_targets/fuzz_cmsheap.rs).
+project: savantenvs/pdatastructs-rs
+target: cms-heap
+testsuite:
+  - https://$MAYHEM_DOMAIN/savantenvs/pdatastructs-rs/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/cms-heap/testsuite
+cmds:
+  - cmd: /mayhem/fuzz_cmsheap
+    libfuzzer: true

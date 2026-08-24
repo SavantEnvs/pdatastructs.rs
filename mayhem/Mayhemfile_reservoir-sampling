@@ -1,0 +1,9 @@
+# Mayhem target: reservoir-sampling — streams values through a seeded ReservoirSampling and checks reservoir size, uniqueness and provenance (see mayhem/fuzz/fuzz_targets/fuzz_reservoirsampling.rs).
+project: savantenvs/pdatastructs-rs
+target: reservoir-sampling
+testsuite:
+  - https://$MAYHEM_DOMAIN/savantenvs/pdatastructs-rs/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/reservoir-sampling/testsuite
+cmds:
+  - cmd: /mayhem/fuzz_reservoirsampling
+    libfuzzer: true

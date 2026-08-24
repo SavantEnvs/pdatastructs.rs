@@ -1,0 +1,9 @@
+# Mayhem target: lossy-counter — drives a stream of keys into a LossyCounter and checks the Lossy Counting no-false-negative and error-bound guarantees against exact counts (see mayhem/fuzz/fuzz_targets/fuzz_lossycounter.rs).
+project: savantenvs/pdatastructs-rs
+target: lossy-counter
+testsuite:
+  - https://$MAYHEM_DOMAIN/savantenvs/pdatastructs-rs/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/lossy-counter/testsuite
+cmds:
+  - cmd: /mayhem/fuzz_lossycounter
+    libfuzzer: true

@@ -1,0 +1,3 @@
+# Build artifacts for the additive crates under mayhem/ — never commit these.
+fuzz/target/
+kat/target/
