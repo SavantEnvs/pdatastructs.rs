@@ -1,0 +1,26 @@
+[package]
+name = "pdatastructs-kat"
+version = "0.0.0"
+publish = false
+edition = "2024"
+
+# Standalone workspace root (see mayhem/fuzz/Cargo.toml for why).
+[workspace]
+
+# default-features off: the KAT probe (bloom filter/CMS/HLL) doesn't need "rand". At UPSTREAM
+# (pdatastructs Cargo.toml pins rand = "0.9" here, vs. "0.10" on the live branch's HEAD), pulling
+# "rand" drags in rand_core -> zerocopy 0.8.x, which hits zerocopy's `stdarch_x86_avx512`
+# unstable-feature gate (E0658) on the pinned ASan nightly (see mayhem/Dockerfile's
+# RUST_STABLE_TOOLCHAIN note on the same trap for `cargo test`'s dev-deps) — avoided here by
+# simply not needing "rand" at all.
+[dependencies.pdatastructs]
+path = "../.."
+default-features = false
+features = ["num-traits", "fixedbitset", "bytecount"]
+
+[[bin]]
+name = "kat"
+path = "src/main.rs"
+test = false
+doc = false
+bench = false

@@ -1,0 +1,21 @@
+# Backport target: reproduces mayhemheroes/pdatastructs-rs's `cms-heap` target (run 16, fuzzed at
+# fork commit 9e1c3303bd1eaced5e9ab93bb91b83c7a15a54b7) at its vulnerable upstream commit. The
+# harness (mayhem/fuzz/fuzz_targets/cms_heap.rs) is reconstructed from the original run's binary:
+# it feeds the input bytes as u8 data points into a CMSHeap backed by a CountMinSketch built with
+# the crate's doc-example accuracy (w=28, d=2), and trips CMSHeap::add's debug_assert that a
+# never-before-seen key must have a CountMinSketch count of exactly 1 — an assumption a Count-Min
+# Sketch hash collision can violate.
+project: savantenvs/pdatastructs.rs
+target: cms-heap-buggy-mhh-run-16
+# NOTE: the server-tar slug is hard-coded to savantenvs/pdatastructs-rs, NOT $MAYHEM_PROJECT.
+# mcode-action passes --project savantenvs/pdatastructs.rs (derived from the GitHub repo name), so
+# $MAYHEM_PROJECT expands to the UN-normalized "pdatastructs.rs" while Mayhem's real project slug
+# is "pdatastructs-rs" (it lowercases and maps . and _ -> -). Using $MAYHEM_PROJECT here makes
+# run-creation abort ("you do not have access to use a test suite from the project
+# pdatastructs.rs") and no run is ever started — the same trap documented on savantenvs/dr_libs.
+testsuite:
+  - https://$MAYHEM_DOMAIN/savantenvs/pdatastructs-rs/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/cms-heap-buggy-mhh-run-16/testsuite
+cmds:
+  - cmd: /mayhem/cms_heap
+    libfuzzer: true
